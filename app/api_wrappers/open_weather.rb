@@ -25,7 +25,7 @@ class OpenWeather
     # The method receives the following parameters:
     # - lat: The latitude of the location.
     # - lon: The longitude of the location.
-    # - exclude: The parts of the weather forecast to exclude.
+    # - exclude: The parts of the weather forecast to exclude. Please use an array of the ForecastTypes constants.
     def onecall(lat:, lon:, exclude:, units: "metric")
         if exclude.is_a?(Array) && exclude.length > 0
             exclude = exclude.join(",")
