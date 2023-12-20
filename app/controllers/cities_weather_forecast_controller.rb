@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class CitiesWeatherForecastController < ApplicationController
   include ThrowsHttpErrors
 
@@ -8,7 +10,6 @@ class CitiesWeatherForecastController < ApplicationController
     query = params[:q]
     cities_weather_forecast_service = CitiesWeatherForecastService.new(query)
     cities_weather_forecast = cities_weather_forecast_service.call
-    render json: { cities_weather_forecast: cities_weather_forecast}
+    render json: { cities_weather_forecast: }
   end
-
 end

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 ##
 # This module is responsible for configuring the API clients.
 # All API clients must include this module.
@@ -5,7 +7,6 @@
 # It uses the Faraday gem to make HTTP requests and that gem is configured
 # with this module.
 module ApiClientConfigurator
-
   ##
   # This method is responsible for configuring the API client.
   # It uses the Faraday gem to make HTTP requests and that gem is configured
@@ -46,12 +47,9 @@ module ApiClientConfigurator
       builder.adapter :async_http if pararell_support
 
       # Add query authentication
-      if add_query_auth
-        builder.params[query_auth_key] = query_auth_value
-      end
+      builder.params[query_auth_key] = query_auth_value if add_query_auth
     end
   end
-
 
   private
 
@@ -61,13 +59,9 @@ module ApiClientConfigurator
   def configure_route
     @api_url = @base_url
 
-    unless @prefix.nil?
-      @api_url = @api_url + "/#{@prefix}"
-    end
+    @api_url += "/#{@prefix}" unless @prefix.nil?
 
-    unless @version.nil?
-      @api_url = @api_url + "/#{@version}"
-    end
+    @api_url += "/#{@version}" unless @version.nil?
 
     @apiurl
   end

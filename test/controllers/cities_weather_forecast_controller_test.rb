@@ -1,7 +1,9 @@
-require "test_helper"
+# frozen_string_literal: true
+
+require 'test_helper'
 
 class CitiesWeatherForecastControllerTest < ActionDispatch::IntegrationTest
-  test "should get cities with weather forecast" do
+  test 'should get cities with weather forecast' do
     get cities_weather_forecast_daily_url
     assert_response :success
 
@@ -10,21 +12,21 @@ class CitiesWeatherForecastControllerTest < ActionDispatch::IntegrationTest
     assert_equal expected_response_length, response.parsed_body['cities_weather_forecast'].length
 
     # Assert that the response has the expected keys in the first element
-    expected_keys = ['city', 'weather_forecast']
+    expected_keys = %w[city weather_forecast]
     first_element = response.parsed_body['cities_weather_forecast'][0]
     assert_equal expected_keys, first_element.keys
 
     # Assert nested keys
     city = first_element['city']
-    city_expected_keys = ['city_name', 'state', 'country']
+    city_expected_keys = %w[city_name state country]
     assert_equal city_expected_keys, city.keys
 
     weather_forecast = first_element['weather_forecast'][0]
-    weather_forecast_expected_keys = ['date', 'weather_name', 'temp_min', 'temp_max']
+    weather_forecast_expected_keys = %w[date weather_name temp_min temp_max]
     assert_equal weather_forecast_expected_keys, weather_forecast.keys
   end
 
-  test "should get cities with weather forecast for given query" do
+  test 'should get cities with weather forecast for given query' do
     city_query = 'Monterrey'
     get cities_weather_forecast_daily_url, params: { query: city_query }
     assert_response :success

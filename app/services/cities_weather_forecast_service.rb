@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 ##
 # CitiesWeatherForecastService
 # This class is responsible for getting the weather forecast for a list of cities
@@ -34,21 +36,25 @@ class CitiesWeatherForecastService
     # This method uses the Async gem to make the requests to the data sources in parallel.
     Async do
       result = cities.map do |city|
-        city_model = @use_mappers ?
-          ( @cities_mapper.map_full_model_to_minimal_model city )
-          : city
+        city_model = if @use_mappers
+                       (@cities_mapper.map_full_model_to_minimal_model city)
+                     else
+                       city
+                     end
         city_weather_forecast = { city: city_model, weather_forecast: nil }
 
-        Async {
+        Async do
           weather_forecast =
-            @weather_forecast_repository.get_daily_weather_forecast lat: city["lat"], lon: city["long"]
+            @weather_forecast_repository.get_daily_weather_forecast lat: city['lat'], lon: city['long']
 
-          weather_forecast_model = @use_mappers ?
-            ( @weather_forecast_mapper.map_full_model_to_daily_minimal_model weather_forecast )
-            : weather_forecast
+          weather_forecast_model = if @use_mappers
+                                     (@weather_forecast_mapper.map_full_model_to_daily_minimal_model weather_forecast)
+                                   else
+                                     weather_forecast
+                                   end
 
           city_weather_forecast[:weather_forecast] = weather_forecast_model
-        }
+        end
 
         city_weather_forecast
       end
@@ -56,5 +62,4 @@ class CitiesWeatherForecastService
 
     result
   end
-
 end
