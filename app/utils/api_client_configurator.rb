@@ -41,7 +41,7 @@ module ApiClientConfigurator
 
       # Logs requests and responses.
       # By default, it only logs the request method and URL, and the request/response headers.
-      # builder.response :logger
+      builder.response :logger
 
       # Add parallel support for requests
       builder.adapter :async_http if pararell_support
