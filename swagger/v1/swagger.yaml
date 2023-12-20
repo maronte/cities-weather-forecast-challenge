@@ -1,0 +1,23 @@
+---
+openapi: 3.0.1
+info:
+  title: API V1
+  version: v1
+paths:
+  "/cities-weather-forecast/daily":
+    get:
+      summary: daily cities_weather_forecast
+      parameters:
+      - q: string
+        in: query
+        required: false
+      responses:
+        '200':
+          description: successful
+servers:
+- url: "{protocol}://{defaultHost}"
+  variables:
+    defaultHost:
+      default: localhost:3000
+    protocol:
+      default: http

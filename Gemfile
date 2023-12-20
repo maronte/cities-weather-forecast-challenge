@@ -46,12 +46,19 @@ gem 'async-http-faraday'
 # A Ruby gem to load environment variables from `.env`.
 gem 'dotenv-rails', groups: %i[development test]
 
+# A Ruby gem to add support for the JSON API specification to Ruby on Rails applications.
+gem 'rswag'
+
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
   gem 'debug', platforms: %i[mri windows]
 
   # Add linting to the project
   gem 'rubocop', require: false
+
+  # Add dependencies to generate Swagger documentation
+  gem 'rspec-rails'
+  gem 'rswag-specs'
 end
 
 group :development do
